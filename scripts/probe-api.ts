@@ -1,50 +1,65 @@
 /**
- * 공공데이터포털 API 응답 구조 점검용.
+ * 공공데이터포털 API 응답 점검용.
  *   DATA_GO_KR_SERVICE_KEY=... npm run probe
- * 각 API를 한두 건만 호출해서 HTTP 상태, 응답 구조(키 목록), 첫 항목을 출력한다.
- * 인증키는 출력하지 않는다(응답 안에 섞여 있어도 가린다).
+ * - 나라일터: 인증키가 등록됐는지 한 건만 호출해 본다
+ * - 잡알리오: 진행 중 공고 전체를 받아 학력·직무·고용형태 값의 분포와,
+ *   이 사이트 기준(분야·학력)으로 몇 건이 남는지 출력한다
+ * 인증키는 출력하지 않는다.
  */
+import { jobalio } from "../src/collectors/jobalio";
+import { isOpenToHighSchoolGrads } from "../src/lib/education";
+
 const KEY = process.env.DATA_GO_KR_SERVICE_KEY ?? "";
-
-const targets: { name: string; url: string }[] = [
-  { name: "잡알리오", url: "https://apis.data.go.kr/1051000/recruitment/list?resultType=json&numOfRows=2&pageNo=1" },
-  { name: "잡알리오(진행중)", url: "https://apis.data.go.kr/1051000/recruitment/list?resultType=json&numOfRows=2&pageNo=1&ongoingYn=Y" },
-  { name: "나라일터(type=json)", url: "https://apis.data.go.kr/1760000/PblJobService/getList?type=json&numOfRows=2&pageNo=1" },
-  { name: "나라일터(resultType=json)", url: "https://apis.data.go.kr/1760000/PblJobService/getList?resultType=json&numOfRows=2&pageNo=1" },
-  { name: "나라일터(기본)", url: "https://apis.data.go.kr/1760000/PblJobService/getList?numOfRows=2&pageNo=1" },
-];
-
 const redact = (s: string) => (KEY ? s.split(KEY).join("***").split(encodeURIComponent(KEY)).join("***") : s);
 
-function shape(v: unknown, depth = 0): unknown {
-  if (depth > 4) return "…";
-  if (Array.isArray(v)) return v.length ? [shape(v[0], depth + 1), `(${v.length}개)`] : [];
-  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, shape(x, depth + 1)]));
-  return typeof v;
+async function rawAlio(page: number) {
+  const url = `https://apis.data.go.kr/1051000/recruitment/list?resultType=json&numOfRows=100&pageNo=${page}&ongoingYn=Y&serviceKey=${encodeURIComponent(KEY)}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(30_000) });
+  return (await res.json()) as { totalCount: number; result?: Record<string, unknown>[] };
+}
+
+function count(values: string[]) {
+  const m = new Map<string, number>();
+  for (const v of values) m.set(v, (m.get(v) ?? 0) + 1);
+  return [...m.entries()].sort((a, b) => b[1] - a[1]);
 }
 
 async function main() {
-  if (!KEY) {
-    console.log("DATA_GO_KR_SERVICE_KEY가 비어 있습니다.");
-    process.exit(1);
+  if (!KEY) throw new Error("DATA_GO_KR_SERVICE_KEY가 비어 있습니다.");
+
+  console.log("===== 나라일터 인증 확인 =====");
+  const nr = await fetch(
+    `https://apis.data.go.kr/1760000/PblJobService/getList?type=json&numOfRows=1&pageNo=1&serviceKey=${encodeURIComponent(KEY)}`,
+  );
+  console.log(`HTTP ${nr.status}`, redact(await nr.text()).slice(0, 1500));
+
+  console.log("\n===== 잡알리오 진행 중 공고 분포 =====");
+  const items: Record<string, unknown>[] = [];
+  for (let page = 1; page <= 10; page++) {
+    const r = await rawAlio(page);
+    items.push(...(r.result ?? []));
+    if (page === 1) console.log("진행 중 전체:", r.totalCount);
+    if ((r.result ?? []).length < 100) break;
   }
-  for (const t of targets) {
-    console.log(`\n===== ${t.name} =====`);
-    try {
-      const res = await fetch(`${t.url}&serviceKey=${encodeURIComponent(KEY)}`, { signal: AbortSignal.timeout(20_000) });
-      const text = redact(await res.text());
-      console.log(`HTTP ${res.status} · ${res.headers.get("content-type")}`);
-      try {
-        const json = JSON.parse(text);
-        console.log("구조:", JSON.stringify(shape(json), null, 1).slice(0, 3000));
-        console.log("원문 앞부분:", JSON.stringify(json).slice(0, 4000));
-      } catch {
-        console.log("JSON 아님. 원문 앞부분:", text.slice(0, 2000));
-      }
-    } catch (e) {
-      console.log("요청 실패:", e instanceof Error ? e.message : e);
-    }
+  console.log("받은 건수:", items.length);
+  const split = (k: string) => items.flatMap((it) => String(it[k] ?? "").split(",").map((s) => s.trim()).filter(Boolean));
+  for (const k of ["acbgCondNmLst", "acbgCondLst", "ncsCdNmLst", "hireTypeNmLst", "recrutSeNm", "workRgnNmLst"]) {
+    console.log(`\n[${k}]`, JSON.stringify(count(split(k))));
+  }
+  console.log("\n[학력 조합]", JSON.stringify(count(items.map((it) => String(it.acbgCondNmLst ?? "")))));
+  console.log("\n[files 예시]", JSON.stringify(items.find((it) => Array.isArray(it.files) && (it.files as unknown[]).length)?.files ?? null).slice(0, 800));
+
+  console.log("\n===== 수집기로 변환한 결과 =====");
+  const mapped = await jobalio.collect({ now: new Date(), log: () => {} });
+  const target = mapped.filter((p) => p.fields.length > 0 && isOpenToHighSchoolGrads(p.education, true));
+  console.log(`변환 ${mapped.length}건, 대상 ${target.length}건`);
+  console.log("[education 분포]", JSON.stringify(count(mapped.map((p) => p.education))));
+  for (const p of target.slice(0, 40)) {
+    console.log(`- ${p.education} | ${p.fields.join("/")} | ${p.org} | ${p.title} | ${p.startDate}~${p.deadline}`);
   }
 }
 
-main();
+main().catch((e) => {
+  console.error(e instanceof Error ? redact(e.message) : e);
+  process.exit(1);
+});
