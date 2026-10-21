@@ -89,7 +89,9 @@ export const narailter: Collector = {
   id: "narailter",
   name: "나라일터",
   kind: "api",
-  isReady: () => Boolean(process.env.DATA_GO_KR_SERVICE_KEY),
+  // 최신 글이 있는 마지막 쪽 응답이 1분 넘게 걸려 지금은 꺼 둔다.
+  // 최신순 정렬이나 날짜 검색 옵션을 찾으면 켠다 (ENABLE_NARAILTER=1)
+  isReady: () => Boolean(process.env.DATA_GO_KR_SERVICE_KEY) && process.env.ENABLE_NARAILTER === "1",
   async collect({ now, log }) {
     const key = process.env.DATA_GO_KR_SERVICE_KEY!;
     // 전체 건수만 알려고 1건짜리로 먼저 부른다
