@@ -23,7 +23,7 @@ async function readJson(file: string): Promise<{ postings: JobPosting[] }> {
   }
 }
 
-/** 이 사이트의 대상: 전기·전자·통신·전산·IT 분야의 고졸 또는 고졸 이상 공고 (학력무관 제외) */
+/** 이 사이트의 대상: 전기·전자·통신·전산·IT·사무·시설관리 분야의 고졸 또는 고졸 이상 공고 (학력무관 제외) */
 function isTarget(p: JobPosting): boolean {
   return p.fields.length > 0 && isOpenToHighSchoolGrads(p.education, true);
 }
