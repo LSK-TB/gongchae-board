@@ -42,8 +42,18 @@ src/lib/
   regions.ts              지역명 정규화
 src/app/                  화면 (목록 /, 보관함 /archive, 상세 /jobs/[id])
 src/components/JobBoard   진행중/마감 탭, 분야 칩, 검색·지역·기관유형·출처·"고졸 이상 포함" 필터
-.github/workflows/        하루 2번 자동 수집
+.github/workflows/        collect.yml 하루 2번 자동 수집, deploy.yml Pages 배포
 ```
+
+## 배포 (GitHub Pages)
+
+`.github/workflows/deploy.yml`이 main에 코드가 올라올 때와 공고 수집이 끝날 때마다 사이트를 빌드해 GitHub Pages에 올립니다.
+주소는 `https://<계정>.github.io/<저장소 이름>/` 입니다.
+
+처음 한 번은 직접 설정해야 합니다.
+
+1. 저장소 Settings → Pages → Build and deployment → Source를 **GitHub Actions**로 바꿉니다.
+2. 비공개 저장소는 GitHub 무료 플랜에서 Pages를 쓸 수 없습니다. 저장소를 공개로 바꾸거나 GitHub Pro 이상이 필요합니다.
 
 ## 새 출처 붙이기
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { daysLeft, todayKST } from "@/lib/deadline";
 import { isOpenToHighSchoolGrads } from "@/lib/education";
@@ -164,7 +165,7 @@ export function JobBoard({
         <ul className="job-list">
           {list.map((p) => (
             <li key={p.id} className={isClosed(p, today) ? "job-card closed" : "job-card"}>
-              <a href={`/jobs/${toSlug(p.id)}/`}>
+              <Link href={`/jobs/${toSlug(p.id)}/`}>
                 <div className="job-top">
                   <DeadlineBadge deadline={p.deadline} today={today} />
                   {p.fields.map((fd) => <span key={fd} className="badge field">{fd}</span>)}
@@ -179,7 +180,7 @@ export function JobBoard({
                   접수 {p.startDate ?? "?"} ~ {p.deadline ?? "채용 시까지"}
                   {p.headcount ? ` · ${p.headcount}명` : ""}
                 </p>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
