@@ -30,7 +30,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ id: 
 
   return (
     <article className="detail">
-      <Link href={archived ? "/archive/" : "/"} className="back">← {archived ? "보관함으로" : "목록으로"}</Link>
+      <Link href={archived ? "/archive/" : "/"} className="back">← {archived ? "보관함으로" : "공고 목록으로"}</Link>
       {archived && <p className="notice">마감 후 14일이 지나 보관함으로 옮겨진 공고입니다.</p>}
       <div className="job-top">
         <DeadlineBadge deadline={p.deadline} />

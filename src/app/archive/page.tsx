@@ -1,14 +1,11 @@
-import { JobBoard } from "@/components/JobBoard";
-import { getArchivedPostings, getUpdatedAt } from "@/lib/postings";
+import { HomeBoard } from "@/components/HomeBoard";
+import { getAllPostings, getArchivedPostings, getUpdatedAt } from "@/lib/postings";
 
-export const metadata = { title: "보관함 | 공기업 고졸 공채 알림판" };
+export const metadata = { title: "지난 공고 보관함 | 고졸 공채 알림판" };
 
+/** 예전 /archive/ 주소도 그대로 열리도록 보관함 탭을 연 상태로 보여준다 */
 export default function ArchivePage() {
   return (
-    <>
-      <h1 className="page-title">보관함</h1>
-      <p className="meta">마감 후 14일이 지난 공고를 모아 둡니다. 지난 채용 시기·인원을 참고할 때 쓰세요.</p>
-      <JobBoard postings={getArchivedPostings()} updatedAt={getUpdatedAt()} variant="archive" />
-    </>
+    <HomeBoard postings={getAllPostings()} archive={getArchivedPostings()} updatedAt={getUpdatedAt()} initialTab="archive" />
   );
 }
