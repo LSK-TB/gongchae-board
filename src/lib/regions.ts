@@ -11,6 +11,21 @@ const ALIASES: Record<string, string> = {
   제주특별자치도: "제주", 제주도: "제주",
 };
 
+/** 잡알리오는 "전남광주"처럼 두 지역을 붙여 쓰기도 한다 */
+export function normalizeRegions(raw: string): string[] {
+  const out = new Set<string>();
+  for (const part of raw.split(/[,/]/).map((s) => s.trim()).filter(Boolean)) {
+    if (part === "전남광주") {
+      out.add("전남");
+      out.add("광주");
+      continue;
+    }
+    const r = normalizeRegion(part);
+    if (r) out.add(r);
+  }
+  return [...out];
+}
+
 /** "인천광역시 남동구", "경기도" 같은 표기를 "인천", "경기"로 맞춘다 */
 export function normalizeRegion(raw: string): string | null {
   const t = raw.trim();

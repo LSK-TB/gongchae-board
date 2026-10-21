@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "npx serve out",
     "collect": "tsx scripts/collect.ts",
-    "test": "tsx --test src/**/*.test.ts",
+    "test": "tsx --test src/**/*.test.ts src/collectors/*.test.ts",
     "typecheck": "tsc --noEmit",
     "probe": "tsx scripts/probe-api.ts"
   },

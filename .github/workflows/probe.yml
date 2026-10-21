@@ -1,9 +1,9 @@
-# 공공데이터포털 API 응답 구조를 점검한다 (Actions 탭에서 수동 실행).
+# 공공데이터포털 API 응답 구조를 점검한다. Actions 탭에서 수동 실행하거나, 수집기를 바꾸는 PR에서 자동 실행된다.
 name: probe-api
 on:
   workflow_dispatch:
   pull_request:
-    paths: ["scripts/probe-api.ts", ".github/workflows/probe.yml"]
+    paths: ["scripts/probe-api.ts", ".github/workflows/probe.yml", "src/collectors/**"]
 permissions:
   contents: read
 jobs:
