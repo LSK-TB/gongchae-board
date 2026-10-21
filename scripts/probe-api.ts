@@ -7,6 +7,7 @@
  * 인증키는 출력하지 않는다.
  */
 import { jobalio } from "../src/collectors/jobalio";
+import { narailter } from "../src/collectors/narailter";
 import { isOpenToHighSchoolGrads } from "../src/lib/education";
 
 const KEY = process.env.DATA_GO_KR_SERVICE_KEY ?? "";
@@ -27,11 +28,14 @@ function count(values: string[]) {
 async function main() {
   if (!KEY) throw new Error("DATA_GO_KR_SERVICE_KEY가 비어 있습니다.");
 
-  console.log("===== 나라일터 인증 확인 =====");
-  const nr = await fetch(
-    `https://apis.data.go.kr/1760000/PblJobService/getList?type=json&numOfRows=1&pageNo=1&serviceKey=${encodeURIComponent(KEY)}`,
-  );
-  console.log(`HTTP ${nr.status}`, redact(await nr.text()).slice(0, 1500));
+  console.log("===== 나라일터 최신 공고 =====");
+  const nara = await narailter.collect({ now: new Date(), log: (m) => console.log(m) });
+  const byIdx = [...nara].sort((a, b) => Number(b.sourceId) - Number(a.sourceId));
+  for (const p of byIdx.slice(0, 15)) console.log(`- ${p.sourceId} | ${p.org} | ${p.title} | ${p.startDate}~${p.deadline}`);
+  const naraTarget = nara.filter((p) => p.fields.length > 0 && isOpenToHighSchoolGrads(p.education, true));
+  console.log(`나라일터 대상 ${naraTarget.length}건`);
+  for (const p of naraTarget.slice(0, 20)) console.log(`  * ${p.education} | ${p.fields.join("/")} | ${p.org} | ${p.title} | ~${p.deadline}`);
+  console.log("[나라일터 학력 분포]", JSON.stringify(count(nara.map((p) => p.education))));
 
   console.log("\n===== 잡알리오 진행 중 공고 분포 =====");
   const items: Record<string, unknown>[] = [];

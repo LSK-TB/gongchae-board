@@ -62,3 +62,23 @@ test("수집에서 빠진 공고: 마감이면 남기고, 마감 전이면 지�
   assert.deepEqual(r.postings.map((p) => p.sourceId), ["1"]);
   assert.deepEqual(r.archive.map((p) => p.sourceId), ["2"]);
 });
+
+import { parseNaraXml, toNaraPosting } from "./narailter";
+
+test("나라일터 XML 파싱 (실제 응답 형태)", () => {
+  const xml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><response><header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE.</resultMsg></header><body><items><item><areacode>00000</areacode><enddate>20261105</enddate><idx>292905</idx><insttname>우정사업본부</insttname><regdate>20261020</regdate><title>2026년 고졸 전산직 기간제 채용 &amp; 공고</title><type01>e01</type01><type02>g01</type02></item></items><numOfRows>1</numOfRows><pageNo>1</pageNo><totalCount>292905</totalCount></body></response>`;
+  const r = parseNaraXml(xml);
+  assert.equal(r.resultCode, "00");
+  assert.equal(r.totalCount, 292905);
+  assert.equal(r.items[0].title, "2026년 고졸 전산직 기간제 채용 & 공고");
+  const p = toNaraPosting(r.items[0], new Date("2026-10-21T00:00:00Z"));
+  assert.equal(p.deadline, "2026-11-05");
+  assert.equal(p.education, "고졸");
+  assert.deepEqual(p.fields, ["전산·IT"]);
+  assert.equal(p.employmentType, "계약직");
+});
+
+test("나라일터 인증 오류 응답", () => {
+  const xml = `<OpenAPI_ServiceResponse><cmmMsgHeader><errMsg>SERVICE_KEY_IS_NOT_REGISTERED_ERROR</errMsg><returnReasonCode>30</returnReasonCode></cmmMsgHeader></OpenAPI_ServiceResponse>`;
+  assert.equal(parseNaraXml(xml).resultCode, "30");
+});
