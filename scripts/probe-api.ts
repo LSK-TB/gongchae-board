@@ -7,7 +7,6 @@
  * 인증키는 출력하지 않는다.
  */
 import { jobalio } from "../src/collectors/jobalio";
-import { narailter } from "../src/collectors/narailter";
 import { isOpenToHighSchoolGrads } from "../src/lib/education";
 
 const KEY = process.env.DATA_GO_KR_SERVICE_KEY ?? "";
@@ -28,17 +27,30 @@ function count(values: string[]) {
 async function main() {
   if (!KEY) throw new Error("DATA_GO_KR_SERVICE_KEY가 비어 있습니다.");
 
-  console.log("===== 나라일터 최신 공고 =====");
-  const nara = await narailter.collect({ now: new Date(), log: (m) => console.log(m) }).catch((e) => {
-    console.log("나라일터 실패:", redact(e instanceof Error ? e.message : String(e)));
-    return [];
-  });
-  const byIdx = [...nara].sort((a, b) => Number(b.sourceId) - Number(a.sourceId));
-  for (const p of byIdx.slice(0, 15)) console.log(`- ${p.sourceId} | ${p.org} | ${p.title} | ${p.startDate}~${p.deadline}`);
-  const naraTarget = nara.filter((p) => p.fields.length > 0 && isOpenToHighSchoolGrads(p.education, true));
-  console.log(`나라일터 대상 ${naraTarget.length}건`);
-  for (const p of naraTarget.slice(0, 20)) console.log(`  * ${p.education} | ${p.fields.join("/")} | ${p.org} | ${p.title} | ~${p.deadline}`);
-  console.log("[나라일터 학력 분포]", JSON.stringify(count(nara.map((p) => p.education))));
+  console.log("===== 나라일터 API 명세 (공공데이터포털 페이지) =====");
+  try {
+    const html = await (await fetch("https://www.data.go.kr/data/15156780/openapi.do", { signal: AbortSignal.timeout(30_000) })).text();
+    const i = html.indexOf("swaggerJson");
+    console.log("swaggerJson 위치:", i);
+    if (i >= 0) console.log(html.slice(i, i + 6000));
+    else console.log([...html.matchAll(/요청변수[\s\S]{0,3000}/g)].map((m) => m[0].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ")).join("\n").slice(0, 4000));
+  } catch (e) {
+    console.log("명세 페이지 실패:", e instanceof Error ? e.message : e);
+  }
+
+  console.log("\n===== 나라일터 1쪽 (최근 글 정렬 여부) =====");
+  for (const extra of ["", "&sort=desc", "&srchBgnDe=20261001"]) {
+    const t0 = Date.now();
+    try {
+      const r = await fetch(
+        `https://apis.data.go.kr/1760000/PblJobService/getList?numOfRows=3&pageNo=1${extra}&serviceKey=${encodeURIComponent(KEY)}`,
+        { signal: AbortSignal.timeout(60_000) },
+      );
+      console.log(`[${extra || "기본"}] HTTP ${r.status} ${Math.round((Date.now() - t0) / 1000)}초`, redact(await r.text()).slice(0, 1200));
+    } catch (e) {
+      console.log(`[${extra || "기본"}] 실패`, e instanceof Error ? e.message : e);
+    }
+  }
 
   console.log("\n===== 잡알리오 진행 중 공고 분포 =====");
   const items: Record<string, unknown>[] = [];
