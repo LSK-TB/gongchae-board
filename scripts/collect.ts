@@ -6,6 +6,7 @@
  */
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { hideKey } from "../src/collectors/http";
 import { collectors } from "../src/collectors/registry";
 import { mergePostings } from "../src/collectors/merge";
 import { isOpenToHighSchoolGrads } from "../src/lib/education";
@@ -49,7 +50,7 @@ async function main() {
       refreshed.add(c.id);
       console.log(`✓ ${c.name}: ${got.length}건 중 대상 분야 ${kept.length}건`);
     } catch (e) {
-      console.error(`✗ ${c.name}: 실패, 기존 데이터 유지 —`, e instanceof Error ? e.message : e);
+      console.error(`✗ ${c.name}: 실패, 기존 데이터 유지 —`, hideKey(e instanceof Error ? e.message : String(e)));
     }
   }
 

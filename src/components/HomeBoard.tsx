@@ -16,8 +16,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /** 기관 칩에 보여줄 묶음. 데이터에 있는 것만 보여준다 */
 const ORG_GROUPS: { label: string; types: OrgType[] }[] = [
-  { label: "공기업", types: ["공기업"] },
-  { label: "준정부기관", types: ["준정부기관", "기타공공기관"] },
+  { label: "공공기관", types: ["공공기관", "공기업", "준정부기관", "기타공공기관"] },
   { label: "지방공기업", types: ["지방공기업", "지방출자출연기관"] },
   { label: "정부·지자체", types: ["중앙정부", "지방자치단체"] },
 ];

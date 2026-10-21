@@ -9,6 +9,8 @@ test("학력 판별", () => {
   assert.equal(classifyEducation("특성화고 졸업예정자 채용형 인턴"), "고졸");
   assert.equal(classifyEducation("응시자격: 학력 무관"), "학력무관");
   assert.equal(classifyEducation("고등학교 졸업 이상"), "고졸이상");
+  assert.equal(classifyEducation("2026년 고졸 전산직 채용"), "고졸");
+  assert.equal(classifyEducation("응시자격: 고졸 이상"), "고졸이상");
   assert.equal(classifyEducation("4년제 대학교 졸업 이상"), "대졸이상");
   assert.equal(classifyEducation("신규직원 채용"), "미확인");
 });
