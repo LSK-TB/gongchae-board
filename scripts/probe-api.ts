@@ -29,7 +29,10 @@ async function main() {
   if (!KEY) throw new Error("DATA_GO_KR_SERVICE_KEY가 비어 있습니다.");
 
   console.log("===== 나라일터 최신 공고 =====");
-  const nara = await narailter.collect({ now: new Date(), log: (m) => console.log(m) });
+  const nara = await narailter.collect({ now: new Date(), log: (m) => console.log(m) }).catch((e) => {
+    console.log("나라일터 실패:", redact(e instanceof Error ? e.message : String(e)));
+    return [];
+  });
   const byIdx = [...nara].sort((a, b) => Number(b.sourceId) - Number(a.sourceId));
   for (const p of byIdx.slice(0, 15)) console.log(`- ${p.sourceId} | ${p.org} | ${p.title} | ${p.startDate}~${p.deadline}`);
   const naraTarget = nara.filter((p) => p.fields.length > 0 && isOpenToHighSchoolGrads(p.education, true));

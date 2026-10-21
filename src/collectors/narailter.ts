@@ -16,7 +16,9 @@ import type { Collector } from "./types";
  */
 const BASE = "https://apis.data.go.kr/1760000/PblJobService/getList";
 const ROWS = 100;
-const MAX_PAGES = 5; // 최신 500건이면 마감 2주 이내 공고는 충분히 덮는다
+const MAX_PAGES = 3; // 최신 300건이면 마감 2주 이내 공고는 대부분 덮는다
+// 나라일터 서버가 느려서(한 쪽에 수십 초) 넉넉하게 기다린다
+const SLOW = { timeoutMs: 60_000, retries: 1 };
 
 export interface NaraItem {
   idx: string;
@@ -76,8 +78,8 @@ export function toNaraPosting(it: NaraItem, now: Date): JobPosting {
   };
 }
 
-async function getPage(key: string, page: number) {
-  const xml = await fetchText(`${BASE}?serviceKey=${encodeURIComponent(key)}&numOfRows=${ROWS}&pageNo=${page}`);
+async function getPage(key: string, page: number, rows = ROWS) {
+  const xml = await fetchText(`${BASE}?serviceKey=${encodeURIComponent(key)}&numOfRows=${rows}&pageNo=${page}`, SLOW);
   const r = parseNaraXml(xml);
   if (r.resultCode !== "00") throw new Error(`나라일터 오류 코드 ${r.resultCode}`);
   return r;
@@ -90,14 +92,17 @@ export const narailter: Collector = {
   isReady: () => Boolean(process.env.DATA_GO_KR_SERVICE_KEY),
   async collect({ now, log }) {
     const key = process.env.DATA_GO_KR_SERVICE_KEY!;
-    const first = await getPage(key, 1);
-    const last = Math.max(1, Math.ceil(first.totalCount / ROWS));
+    // 전체 건수만 알려고 1건짜리로 먼저 부른다
+    const { totalCount } = await getPage(key, 1, 1);
+    const last = Math.max(1, Math.ceil(totalCount / ROWS));
     const out: JobPosting[] = [];
     for (let page = last; page > Math.max(0, last - MAX_PAGES); page--) {
-      const r = page === 1 ? first : await getPage(key, page);
+      const t0 = Date.now();
+      const r = await getPage(key, page);
       out.push(...r.items.map((it) => toNaraPosting(it, now)));
+      log(`나라일터 ${page}쪽: ${r.items.length}건 (${Math.round((Date.now() - t0) / 1000)}초)`);
     }
-    log(`나라일터 최신 ${out.length}건 (전체 ${first.totalCount}건)`);
+    log(`나라일터 최신 ${out.length}건 (전체 ${totalCount}건)`);
     return out;
   },
 };
