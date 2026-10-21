@@ -1,0 +1,26 @@
+# 매일 오전 7시·오후 7시(한국 시간)에 공고를 수집하고, 바뀐 게 있으면 커밋한다.
+# 저장소 Settings → Secrets에 DATA_GO_KR_SERVICE_KEY를 넣어야 동작한다.
+# 크롤러(인천·클린아이)는 해외 IP에서 막힐 수 있어 기본으로 꺼 두었다.
+name: collect
+on:
+  schedule:
+    - cron: "0 22,10 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm run collect
+        env:
+          DATA_GO_KR_SERVICE_KEY: ${{ secrets.DATA_GO_KR_SERVICE_KEY }}
+      - run: |
+          git config user.name "collector-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/postings.json data/archive.json
+          git diff --cached --quiet || git commit -m "공고 데이터 갱신" && git push

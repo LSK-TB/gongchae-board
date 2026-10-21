@@ -1,0 +1,73 @@
+{
+  "updatedAt": "2026-10-21T00:00:00.000Z",
+  "postings": [
+    {
+      "id": "sample:11",
+      "source": "sample",
+      "sourceId": "11",
+      "title": "2026년 하반기 고졸 신입사원(전기·전자) 채용",
+      "org": "한국수력원자력",
+      "orgType": "공기업",
+      "regions": [
+        "경북"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기",
+        "전자"
+      ],
+      "employmentType": "정규직",
+      "headcount": 40,
+      "startDate": "2026-09-08",
+      "deadline": "2026-09-19",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:12",
+      "source": "sample",
+      "sourceId": "12",
+      "title": "2026년 고졸 제한경쟁(전기·통신) 채용",
+      "org": "한국남동발전",
+      "orgType": "공기업",
+      "regions": [
+        "경남"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기",
+        "통신"
+      ],
+      "employmentType": "정규직",
+      "headcount": 22,
+      "startDate": "2026-09-01",
+      "deadline": "2026-09-12",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:13",
+      "source": "sample",
+      "sourceId": "13",
+      "title": "2026년 고졸 정보보호 분야 채용",
+      "org": "한국인터넷진흥원",
+      "orgType": "준정부기관",
+      "regions": [
+        "전남"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전산·IT"
+      ],
+      "employmentType": "정규직",
+      "headcount": 6,
+      "startDate": "2026-08-18",
+      "deadline": "2026-08-29",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    }
+  ]
+}

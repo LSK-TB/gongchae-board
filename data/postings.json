@@ -1,0 +1,211 @@
+{
+  "updatedAt": "2026-10-21T00:00:00.000Z",
+  "postings": [
+    {
+      "id": "sample:1",
+      "source": "sample",
+      "sourceId": "1",
+      "title": "2026년 하반기 고졸 신입사원(배전·송변전) 채용",
+      "org": "한국전력공사",
+      "orgType": "공기업",
+      "regions": [
+        "전국"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기"
+      ],
+      "employmentType": "정규직",
+      "headcount": 120,
+      "startDate": "2026-10-14",
+      "deadline": "2026-10-23",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:2",
+      "source": "sample",
+      "sourceId": "2",
+      "title": "2026년 고졸 인재 채용(전기·전자·통신)",
+      "org": "한국수자원공사",
+      "orgType": "공기업",
+      "regions": [
+        "대전",
+        "충남"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기",
+        "전자",
+        "통신"
+      ],
+      "employmentType": "정규직",
+      "headcount": 25,
+      "startDate": "2026-10-15",
+      "deadline": "2026-10-28",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:3",
+      "source": "sample",
+      "sourceId": "3",
+      "title": "2026년 하반기 신입사원 공개채용(전기·신호제어)",
+      "org": "한국철도공사",
+      "orgType": "공기업",
+      "regions": [
+        "서울",
+        "경기",
+        "인천"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "전기",
+        "통신"
+      ],
+      "employmentType": "정규직",
+      "headcount": 90,
+      "startDate": "2026-10-10",
+      "deadline": "2026-10-21",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:4",
+      "source": "sample",
+      "sourceId": "4",
+      "title": "2026년 제2회 고졸 제한경쟁 신규직원 채용(전기·통신 분야)",
+      "org": "인천교통공사",
+      "orgType": "지방공기업",
+      "regions": [
+        "인천"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기",
+        "통신"
+      ],
+      "employmentType": "정규직",
+      "headcount": 12,
+      "startDate": "2026-10-18",
+      "deadline": "2026-11-03",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:5",
+      "source": "sample",
+      "sourceId": "5",
+      "title": "2026년 특성화고·마이스터고 졸업(예정)자 채용형 인턴(전산·IT)",
+      "org": "인천국제공항공사",
+      "orgType": "공기업",
+      "regions": [
+        "인천"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전산·IT"
+      ],
+      "employmentType": "정규직",
+      "headcount": 15,
+      "startDate": "2026-10-20",
+      "deadline": "2026-11-10",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:6",
+      "source": "sample",
+      "sourceId": "6",
+      "title": "2026년 고졸 제한경쟁 6급 전산직 채용",
+      "org": "국민건강보험공단",
+      "orgType": "준정부기관",
+      "regions": [
+        "전국"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전산·IT"
+      ],
+      "employmentType": "정규직",
+      "headcount": 20,
+      "startDate": "2026-10-01",
+      "deadline": "2026-10-15",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:8",
+      "source": "sample",
+      "sourceId": "8",
+      "title": "2026년 하반기 고졸 전형 신입사원 채용(전기·전자)",
+      "org": "서울교통공사",
+      "orgType": "지방공기업",
+      "regions": [
+        "서울"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기",
+        "전자"
+      ],
+      "employmentType": "정규직",
+      "headcount": 80,
+      "startDate": "2026-10-21",
+      "deadline": "2026-10-30",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:9",
+      "source": "sample",
+      "sourceId": "9",
+      "title": "2026년 고졸 제한경쟁 전기검사직 채용",
+      "org": "한국전기안전공사",
+      "orgType": "준정부기관",
+      "regions": [
+        "전북"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전기"
+      ],
+      "employmentType": "정규직",
+      "headcount": 18,
+      "startDate": "2026-10-01",
+      "deadline": "2026-10-10",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "id": "sample:10",
+      "source": "sample",
+      "sourceId": "10",
+      "title": "2026년 고졸 IT 인턴 채용",
+      "org": "한국정보화진흥원",
+      "orgType": "준정부기관",
+      "regions": [
+        "대구"
+      ],
+      "education": "고졸",
+      "fields": [
+        "전산·IT"
+      ],
+      "employmentType": "계약직",
+      "headcount": 4,
+      "startDate": "2026-10-05",
+      "deadline": "2026-10-17",
+      "url": "https://job.alio.go.kr/",
+      "summary": "화면 확인용 예시 공고입니다. 실제 공고가 아닙니다. 수집기를 연결하면 원문 공고의 응시자격·전형 절차 요약이 여기에 표시됩니다.",
+      "collectedAt": "2026-10-21T00:00:00.000Z"
+    }
+  ]
+}
