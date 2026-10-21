@@ -42,7 +42,9 @@ test("분야 판별", () => {
   assert.deepEqual(classifyFields("전기·전자·통신 분야"), ["전기", "전자", "통신"]);
   assert.deepEqual(classifyFields("IT 인턴 채용"), ["전산·IT"]);
   assert.deepEqual(classifyFields("6급 전산직"), ["전산·IT"]);
-  assert.deepEqual(classifyFields("사무행정 채용"), []);
+  assert.deepEqual(classifyFields("사무행정 채용"), ["사무"]);
+  assert.deepEqual(classifyFields("청사 시설관리 직원"), ["시설관리"]);
+  assert.deepEqual(classifyFields("조경 인부 채용"), []);
   assert.deepEqual(classifyFields("SPLIT 공사"), []); // 영단어 속 IT는 무시
 });
 

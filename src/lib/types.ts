@@ -18,7 +18,7 @@ export type EducationLevel =
   | "미확인"; // 원문에서 학력 정보를 못 찾음
 
 /** 이 사이트가 다루는 채용 분야 */
-export type JobField = "전기" | "전자" | "통신" | "전산·IT";
+export type JobField = "전기" | "전자" | "통신" | "전산·IT" | "사무" | "시설관리";
 
 export type EmploymentType = "정규직" | "무기계약직" | "계약직" | "인턴" | "기타";
 
@@ -51,4 +51,17 @@ export interface JobPosting {
   summary?: string;
   /** 수집 시각(ISO) */
   collectedAt: string;
+}
+
+/** 공고 자료실 항목: 공고문·채용 안내 같은 참고 자료 링크 */
+export interface ResourceItem {
+  id: string;
+  title: string;
+  org: string;
+  kind: "공고문" | "채용 안내" | "전형 자료" | "기타";
+  fields: JobField[];
+  /** 자료 게시일 (YYYY-MM-DD) */
+  date: string;
+  url: string;
+  note?: string;
 }

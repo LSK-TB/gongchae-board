@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "고졸 공채 알림판",
-  description: "공기업·공공기관의 전기·전자·통신·전산·IT 분야 고졸 공개채용 공고를 한곳에 모아 마감일 순으로 보여줍니다.",
+  description: "공기업·공공기관의 전기·전자·통신·전산·IT·사무·시설관리 분야 고졸 공개채용 공고를 한곳에 모아 마감일 순으로 보여줍니다.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

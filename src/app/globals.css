@@ -88,7 +88,7 @@ main.container { padding-top: 16px; padding-bottom: 40px; display: grid; gap: 16
 .updated { font-size: 13px; color: var(--muted); }
 
 /* 탭 */
-.tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--line); padding: 4px; border-radius: 14px; }
+.tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; background: var(--line); padding: 4px; border-radius: 14px; }
 .tabs button { border: 0; background: transparent; padding: 11px 8px; border-radius: 10px; font-size: 15px; font-weight: 600; color: var(--muted); cursor: pointer; }
 .tabs button.on { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1); }
 .pill { display: inline-block; margin-left: 4px; font-size: 12px; font-weight: 700; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-variant-numeric: tabular-nums; }
@@ -156,4 +156,11 @@ main.container { padding-top: 16px; padding-bottom: 40px; display: grid; gap: 16
   .hero { padding: 22px 18px 18px; }
   .stat .num { font-size: 24px; }
   .toggle { margin-left: 0; }
+}
+
+/* 자료실 */
+.kind-tag { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+@media (max-width: 480px) {
+  .tabs button { font-size: 13px; padding: 10px 4px; }
+  .tabs .pill { display: block; width: fit-content; margin: 2px auto 0; }
 }

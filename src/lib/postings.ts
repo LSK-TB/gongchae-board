@@ -1,6 +1,7 @@
 import archiveData from "../../data/archive.json";
 import data from "../../data/postings.json";
-import type { JobPosting } from "./types";
+import resourcesData from "../../data/resources.json";
+import type { JobPosting, ResourceItem } from "./types";
 
 /**
  * 빌드 시점에 데이터 파일을 읽는다. 수집기(npm run collect)가 두 파일을 갱신한다.
@@ -38,3 +39,11 @@ export const SOURCE_LABELS: Record<string, string> = {
   cleaneye: "클린아이",
   sample: "예시 데이터",
 };
+
+/**
+ * 공고 자료실 항목. 지금은 data/resources.json을 손으로 관리한다.
+ * TODO: 수집기가 공고 상세의 첨부파일(공고문 PDF 등)을 찾으면 여기에 자동으로 추가
+ */
+export function getResources(): ResourceItem[] {
+  return (resourcesData as { items: ResourceItem[] }).items;
+}

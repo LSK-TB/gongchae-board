@@ -7,10 +7,10 @@ import { isOpenToHighSchoolGrads } from "@/lib/education";
 import { JOB_FIELDS } from "@/lib/fields";
 import { toSlug } from "@/lib/postings";
 import { postingStatus, shortDate, STATUS_LABEL } from "@/lib/status";
-import type { JobField, JobPosting, OrgType } from "@/lib/types";
+import type { JobField, JobPosting, OrgType, ResourceItem } from "@/lib/types";
 import { DeadlineBadge } from "./DeadlineBadge";
 
-type Tab = "board" | "archive";
+type Tab = "board" | "archive" | "resources";
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -28,11 +28,13 @@ const byDeadlineDesc = (a: JobPosting, b: JobPosting) => (b.deadline ?? "").loca
 export function HomeBoard({
   postings,
   archive,
+  resources,
   updatedAt,
   initialTab = "board",
 }: {
   postings: JobPosting[];
   archive: JobPosting[];
+  resources: ResourceItem[];
   updatedAt: string;
   initialTab?: Tab;
 }) {
@@ -47,12 +49,13 @@ export function HomeBoard({
   useEffect(() => {
     setToday(todayKST());
     const p = new URLSearchParams(window.location.search);
-    if (p.get("tab") === "archive") setTab("archive");
+    const t = p.get("tab");
+    if (t === "archive" || t === "resources") setTab(t);
   }, []);
 
   const changeTab = (t: Tab) => {
     setTab(t);
-    window.history.replaceState(null, "", t === "archive" ? "?tab=archive" : window.location.pathname);
+    window.history.replaceState(null, "", t === "board" ? window.location.pathname : `?tab=${t}`);
   };
 
   // 요약 숫자
@@ -68,7 +71,7 @@ export function HomeBoard({
   }, [postings, archive, today]);
 
   // 탭에 따라 대상 목록 → 분야 외 필터 적용(분야 칩 숫자 계산용) → 분야 필터
-  const source = tab === "board" ? postings : archive;
+  const source = tab === "archive" ? archive : postings;
   const preField = useMemo(() => {
     const kw = q.trim().toLowerCase();
     const group = ORG_GROUPS.find((g) => g.label === org);
@@ -81,7 +84,13 @@ export function HomeBoard({
   }, [source, q, org, includeOver]);
   const shown = field ? preField.filter((p) => p.fields.includes(field)) : preField;
 
-  const fieldCount = (f: JobField) => preField.filter((p) => p.fields.includes(f)).length;
+  // 자료실은 기관명 검색만 적용한 뒤 분야로 거른다
+  const kwRes = q.trim().toLowerCase();
+  const resPre = resources.filter((r) => !kwRes || `${r.org} ${r.title}`.toLowerCase().includes(kwRes));
+  const resShown = (field ? resPre.filter((r) => r.fields.includes(field)) : resPre).sort((a, b) => b.date.localeCompare(a.date));
+
+  const countBase: { fields: JobField[] }[] = tab === "resources" ? resPre : preField;
+  const fieldCount = (f: JobField) => countBase.filter((p) => p.fields.includes(f)).length;
   const orgGroups = ORG_GROUPS.filter((g) => source.some((p) => g.types.includes(p.orgType)));
 
   const live = shown.filter((p) => postingStatus(p, today) !== "closed").sort(byDeadline);
@@ -93,7 +102,8 @@ export function HomeBoard({
         <p className="eyebrow">공공기관 · 고졸 전형</p>
         <h1>고졸 공채 알림판</h1>
         <p className="lead">
-          공기업·공공기관 채용 중 고졸 대상 <strong>전기 · 전자 · 통신 · 전산/IT</strong> 분야만 골라 정리했습니다.
+          공기업·공공기관 채용 중 고졸 대상 <strong>전기 · 전자 · 통신 · 전산/IT · 사무 · 시설관리</strong> 분야만 골라
+          정리했습니다.
           학력무관 공고는 싣지 않습니다.
         </p>
         <div className="stats">
@@ -135,6 +145,9 @@ export function HomeBoard({
         <button role="tab" aria-selected={tab === "archive"} className={tab === "archive" ? "on" : ""} onClick={() => changeTab("archive")}>
           지난 공고 보관함 <span className="pill">{archive.length}</span>
         </button>
+        <button role="tab" aria-selected={tab === "resources"} className={tab === "resources" ? "on" : ""} onClick={() => changeTab("resources")}>
+          공고 자료실 <span className="pill">{resources.length}</span>
+        </button>
       </div>
 
       <label className="search">
@@ -154,7 +167,7 @@ export function HomeBoard({
 
       <div className="chip-row" role="group" aria-label="분야">
         <button className={field === "" ? "chip on" : "chip"} onClick={() => setField("")}>
-          전체 <span className="n">{preField.length}</span>
+          전체 <span className="n">{countBase.length}</span>
         </button>
         {JOB_FIELDS.map((f) => (
           <button key={f} className={field === f ? "chip on" : "chip"} onClick={() => setField(f)}>
@@ -163,6 +176,7 @@ export function HomeBoard({
         ))}
       </div>
 
+      {tab !== "resources" && (
       <div className="chip-row small" role="group" aria-label="기관">
         <span className="row-label">기관</span>
         <button className={org === "" ? "chip on" : "chip"} onClick={() => setOrg("")}>전체</button>
@@ -176,6 +190,7 @@ export function HomeBoard({
           고졸 이상 공고 포함
         </label>
       </div>
+      )}
 
       {tab === "board" ? (
         <>
@@ -188,6 +203,8 @@ export function HomeBoard({
             empty="최근 2주 안에 마감된 공고가 없어요."
           />
         </>
+      ) : tab === "resources" ? (
+        <ResourceSection list={resShown} />
       ) : (
         <Section
           title="지난 공고"
@@ -255,5 +272,42 @@ function JobCard({ p, today }: { p: JobPosting; today: string }) {
         </p>
       </Link>
     </li>
+  );
+}
+
+function ResourceSection({ list }: { list: ResourceItem[] }) {
+  return (
+    <section className="list-section">
+      <h2 className="section-title">
+        공고 자료실 <span className="pill">{list.length}건</span>
+      </h2>
+      <p className="section-note">공고문, 직무기술서, 필기시험 안내처럼 지원 준비에 필요한 자료를 모았어요. 누르면 원문이 새 창으로 열려요.</p>
+      {list.length === 0 ? (
+        <p className="empty">조건에 맞는 자료가 없어요.</p>
+      ) : (
+        <ul className="job-list">
+          {list.map((r) => (
+            <li key={r.id} className="job-card resource-card">
+              <a href={r.url} target="_blank" rel="noopener noreferrer">
+                <div className="card-top">
+                  <span className="kind-tag">{r.kind}</span>
+                </div>
+                <h3>
+                  {r.org}
+                  {r.fields.map((f) => (
+                    <span key={f} className="field-tag">{f.replace("·", "/")}</span>
+                  ))}
+                </h3>
+                <p className="job-title">{r.title}</p>
+                <p className="job-meta">
+                  게시 {shortDate(r.date)}
+                  {r.note ? ` · ${r.note}` : ""}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
