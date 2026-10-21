@@ -1,0 +1,44 @@
+# main에 코드가 올라오거나 공고 수집(collect)이 끝나면 사이트를 빌드해 GitHub Pages에 올린다.
+# 처음 한 번은 저장소 Settings → Pages → Source를 "GitHub Actions"로 바꿔야 한다.
+name: deploy
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: [collect]
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main # 수집 후 실행될 때도 방금 커밋된 최신 데이터를 쓰도록
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+      - run: touch out/.nojekyll # _next 폴더가 무시되지 않게
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: out }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
