@@ -1,6 +1,29 @@
 {
-  "updatedAt": "2026-11-05T01:52:46.346Z",
+  "updatedAt": "2026-11-05T17:43:55.940Z",
   "postings": [
+    {
+      "id": "jobalio:305921",
+      "source": "jobalio",
+      "sourceId": "305921",
+      "title": "한국농촌경제연구원 2026년 제9차(재공모) 청년인턴(장애인 제한경쟁) 채용 공고",
+      "org": "한국농촌경제연구원",
+      "orgType": "공공기관",
+      "regions": [
+        "전남",
+        "광주"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "사무"
+      ],
+      "employmentType": "인턴",
+      "headcount": 1,
+      "startDate": "2026-10-12",
+      "deadline": "2026-10-22",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=305921",
+      "summary": "- 청년고용촉진특별법시행령 제2조에 해당하는 자(34세 이하)\n- 장애인고용촉진 및 직업재활법 시행령 제3조의 장애인으로 「장애인복지법」에 의하여 시군구에서 교부한 장애인 복지카드 또는 장애인 증명서를 소지한 자\n- 국가공무원법 제33조에 의한 결격사유가 없는 자\n- 고등학교 졸업 이상\n- 전공 불문\n- 성별 등 제한 없음",
+      "collectedAt": "2026-10-22T14:44:59.070Z"
+    },
     {
       "id": "jobalio:305774",
       "source": "jobalio",
