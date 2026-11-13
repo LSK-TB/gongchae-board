@@ -1,6 +1,28 @@
 {
-  "updatedAt": "2026-11-13T02:14:15.685Z",
+  "updatedAt": "2026-11-13T17:25:15.623Z",
   "postings": [
+    {
+      "id": "jobalio:306121",
+      "source": "jobalio",
+      "sourceId": "306121",
+      "title": "2026년 한국여성인권진흥원 제6차 채용 공고",
+      "org": "한국여성인권진흥원",
+      "orgType": "공공기관",
+      "regions": [
+        "서울"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "사무"
+      ],
+      "employmentType": "계약직",
+      "headcount": 8,
+      "startDate": "2026-10-16",
+      "deadline": "2026-10-30",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306121",
+      "summary": "[공통]\n- 진흥원 정년의 의거 만 60세 미만인 자(임용(예정)일 기준)\n- 해외여행에 결격사유가 없는 자\n- 임용 즉시 근무가 가능한 자\n- 남자의 경우 군필 또는 면제자\n- 진흥원 인사규정 및 법률에 의거한 취업 결격사유에 해당되지 않는자\n\n※ 보다 자세한 사항은 첨부파일의 채용공고문을 참조",
+      "collectedAt": "2026-10-30T01:25:02.744Z"
+    },
     {
       "id": "jobalio:306032",
       "source": "jobalio",
