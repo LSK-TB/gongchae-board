@@ -1,6 +1,74 @@
 {
-  "updatedAt": "2026-11-24T05:40:12.317Z",
+  "updatedAt": "2026-11-24T20:25:09.318Z",
   "postings": [
+    {
+      "id": "jobalio:306381",
+      "source": "jobalio",
+      "sourceId": "306381",
+      "title": "오송첨단의료산업진흥재단 2026년 제5차 위촉직 채용 공고",
+      "org": "오송첨단의료산업진흥재단",
+      "orgType": "공공기관",
+      "regions": [
+        "충북"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "사무"
+      ],
+      "employmentType": "계약직",
+      "headcount": 10,
+      "startDate": "2026-10-27",
+      "deadline": "2026-11-10",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306381",
+      "summary": "(주임급)\nㆍ고등학교 졸업 후 채용분야 경력 7년 이상인 자\nㆍ전문학사학위 취득 후 채용분야 경력 3년 이상인 자\nㆍ학사학위 취득 자",
+      "collectedAt": "2026-11-10T03:52:48.650Z"
+    },
+    {
+      "id": "jobalio:306304",
+      "source": "jobalio",
+      "sourceId": "306304",
+      "title": "2026년도 제5차 신규직원(정규직) 채용",
+      "org": "한국해양교통안전공단",
+      "orgType": "공공기관",
+      "regions": [
+        "인천",
+        "충남",
+        "전북"
+      ],
+      "education": "고졸",
+      "fields": [
+        "사무"
+      ],
+      "employmentType": "정규직",
+      "headcount": 12,
+      "startDate": "2026-10-26",
+      "deadline": "2026-11-10",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306304",
+      "summary": "<공통>\nㅇ 연령*, 성별 제한 없음\n  * 행정직 및 실무직은 임용예정일 기준 만 60세 미만인 사람, 해상직은 임용예정일 기준 만 70세 미만인 사람\nㅇ 남자의 경우, 임용예정일 이전 병역을 필하였거나 면제된 사람\nㅇ 임용예정일부터 정상 근무가 가능한 사람\nㅇ 아래의 임용결격사유에 해당되지 않은 사람\n  * 상세내용 채용공고문 필히 참고",
+      "collectedAt": "2026-11-10T03:52:48.650Z"
+    },
+    {
+      "id": "jobalio:306245",
+      "source": "jobalio",
+      "sourceId": "306245",
+      "title": "2026년도 혈장분획센터 육아휴직대체 사무보조원 채용 공고",
+      "org": "대한적십자사",
+      "orgType": "공공기관",
+      "regions": [
+        "충북"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "사무"
+      ],
+      "employmentType": "계약직",
+      "headcount": 1,
+      "startDate": "2026-10-26",
+      "deadline": "2026-11-10",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306245",
+      "summary": "○ 만18세 이상 고등학교 졸업(졸업 예정자 포함) 이상 학력 소지자\n○ 국가기술자격법시행규칙 제3조의 규정에 의거 사무분야 자격증 1개 이상 소지자\n   (워드프로세서, 컴퓨터활용능력 2급 이상, 한글속기 3급 이상, 비서 3급 이상)\n○ 임용예정일로부터 근무 가능한 자\n○ 병역법 제76조의 병역의무 불이행자에 해당하지 않는 자\n○ 대한적십자사 직원운영규정 제20조(결격사유)에 해당하지 않는 자",
+      "collectedAt": "2026-11-10T03:52:48.650Z"
+    },
     {
       "id": "jobalio:306555",
       "source": "jobalio",
