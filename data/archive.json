@@ -1,6 +1,57 @@
 {
-  "updatedAt": "2026-11-27T03:51:16.208Z",
+  "updatedAt": "2026-11-27T19:13:43.456Z",
   "postings": [
+    {
+      "id": "jobalio:306513",
+      "source": "jobalio",
+      "sourceId": "306513",
+      "title": "제2026-3호 국립대구청소년디딤센터 직원 모집",
+      "org": "한국청소년상담복지개발원",
+      "orgType": "공공기관",
+      "regions": [
+        "대구"
+      ],
+      "education": "고졸이상",
+      "fields": [
+        "사무",
+        "전산·IT",
+        "통신"
+      ],
+      "employmentType": "무기계약직",
+      "headcount": 2,
+      "startDate": "2026-10-29",
+      "deadline": "2026-11-13",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306513",
+      "summary": "○ 공무직 일반직 4급_일반행정분야(정보보안) : 1명\n- 보다 자세한 사항은 첨부파일의 채용공고문을 참조\n\n○ 공무직 일반직 5급_상담교육분야 : 1명\n- 보다 자세한 사항은 첨부파일의 채용공고문을 참조",
+      "collectedAt": "2026-11-13T02:14:15.685Z"
+    },
+    {
+      "id": "jobalio:306508",
+      "source": "jobalio",
+      "sourceId": "306508",
+      "title": "2026년 정규직 직원 등 모집",
+      "org": "제주국제자유도시개발센터",
+      "orgType": "공공기관",
+      "regions": [
+        "서울",
+        "제주"
+      ],
+      "education": "고졸",
+      "fields": [
+        "사무",
+        "전기",
+        "전자",
+        "전산·IT",
+        "통신"
+      ],
+      "employmentType": "정규직",
+      "headcount": 18,
+      "startDate": "2026-10-29",
+      "deadline": "2026-11-13",
+      "url": "https://job.alio.go.kr/recruitview.do?idx=306508",
+      "summary": "(6급, 7급, 공무직)  \nㅇ 나이, 학력, 성별 및 전공에 따른 응시자격 제한 없음(단, 기관 정년 고려하여 만 60세 미만이어야 함)\nㅇ JDC 인사규정에 따른 임용 결격사유에 해당하지 않는 분\nㅇ 최종 합격 발표 이후 즉시 근무가 가능하신 분\n※ 분야별 응시자격은 첨부된 공고문 참고",
+      "collectedAt": "2026-11-13T02:14:15.685Z"
+    },
     {
       "id": "jobalio:306405",
       "source": "jobalio",
